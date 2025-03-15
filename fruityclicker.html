@@ -38,38 +38,97 @@
     #upgradeButton:hover {
       background-color: #339933;
     }
+    #autoButton {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 18px;
+      background-color: #ffcc33;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #autoButton:hover {
+      background-color: #ff9900;
+    }
+    #multiplierButton {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 18px;
+      background-color: #ff66cc;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #multiplierButton:hover {
+      background-color: #ff3399;
+    }
   </style>
 </head>
 <body>
   <div id="game">
     <h1>Fruity Clicker</h1>
     <p>Fruit Points: <span id="score">0</span></p>
-    <button id="fruitButton"><img src="apple.png" width="100"></button>
+    <button id="fruitButton"><img src="apple.png" width="150"></button>
     <br>
     <button id="upgradeButton">Upgrade (+1 per click) - Cost: 10</button>
+    <br>
+    <button id="autoButton">Auto-Clicker (+0/sec) - Cost: 50</button>
+    <br>
+    <button id="multiplierButton">Multiplier (x1) - Cost: 100</button>
   </div>
   <script>
     let score = 0;
     let pointsPerClick = 1;
+    let upgradeCost = 10;
+    let autoClickers = 0;
+    let autoCost = 50;
+    let multiplier = 1;
+    let multiplierCost = 100;
     const scoreDisplay = document.getElementById("score");
     const fruitButton = document.getElementById("fruitButton");
     const upgradeButton = document.getElementById("upgradeButton");
+    const autoButton = document.getElementById("autoButton");
+    const multiplierButton = document.getElementById("multiplierButton");
 
     fruitButton.addEventListener("click", function() {
-      score += pointsPerClick;
+      score += pointsPerClick * multiplier;
       scoreDisplay.textContent = score;
-      let sound = new Audio("https://www.myinstants.com/media/sounds/pop.mp3");
-      sound.play();
     });
 
     upgradeButton.addEventListener("click", function() {
-      if (score >= 10) {
-        score -= 10;
+      if (score >= upgradeCost) {
+        score -= upgradeCost;
         pointsPerClick += 1;
+        upgradeCost = Math.floor(upgradeCost * 1.5);
         scoreDisplay.textContent = score;
-        upgradeButton.textContent = `Upgrade (+${pointsPerClick} per click) - Cost: 10`;
+        upgradeButton.textContent = `Upgrade (+${pointsPerClick} per click) - Cost: ${upgradeCost}`;
       }
     });
+
+    autoButton.addEventListener("click", function() {
+      if (score >= autoCost) {
+        score -= autoCost;
+        autoClickers += 1;
+        autoCost = Math.floor(autoCost * 1.5);
+        scoreDisplay.textContent = score;
+        autoButton.textContent = `Auto-Clicker (+${autoClickers}/sec) - Cost: ${autoCost}`;
+      }
+    });
+
+    multiplierButton.addEventListener("click", function() {
+      if (score >= multiplierCost) {
+        score -= multiplierCost;
+        multiplier += 1;
+        multiplierCost = Math.floor(multiplierCost * 2);
+        scoreDisplay.textContent = score;
+        multiplierButton.textContent = `Multiplier (x${multiplier}) - Cost: ${multiplierCost}`;
+      }
+    });
+
+    setInterval(function() {
+      score += autoClickers * multiplier;
+      scoreDisplay.textContent = score;
+    }, 1000);
   </script>
 </body>
 </html>
