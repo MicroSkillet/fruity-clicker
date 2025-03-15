@@ -44,7 +44,7 @@
       border-radius: 10px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
       text-align: center;
-      height: 150px;
+      height: 180px; /* Increased height for spacing */
       width: 150px;
       display: flex;
       flex-direction: column;
@@ -54,25 +54,25 @@
       transition: background-color 0.2s;
     }
     .collectible:hover {
-      background-color: #f0f0f0; /* Light gray hover effect */
+      background-color: #f0f0f0;
     }
     .collectible:active {
-      background-color: #e0e0e0; /* Darker when clicked */
+      background-color: #e0e0e0;
     }
     #treeBox {
-      background-color: #fff3cc; /* Light yellow base */
+      background-color: #fff3cc;
     }
     #treeBox:hover {
       background-color: #ffe066;
     }
     #yardBox {
-      background-color: #cceeff; /* Light blue base */
+      background-color: #cceeff;
     }
     #yardBox:hover {
       background-color: #66ccff;
     }
     #gardenBox {
-      background-color: #ffccf2; /* Light pink base */
+      background-color: #ffccf2;
     }
     #gardenBox:hover {
       background-color: #ff99cc;
@@ -86,9 +86,14 @@
       margin: 0 2px;
     }
     .collectible p {
-      margin: 5px 0;
+      margin: 0;
       font-size: 14px;
-      white-space: pre; /* Preserve line breaks for \n */
+      line-height: 1.5; /* 1.5 line spacing */
+    }
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   </style>
 </head>
@@ -102,8 +107,11 @@
     <div id="sidebar">
       <div class="collectible" id="treeBox">
         <img src="fruit-tree.png" width="56">
-        <p>Trees: <span id="treeCount">0</span></p>
-        <p id="treeText">TREE\n1/sec\n50</p>
+        <div class="text-container">
+          <p>TREE: <span id="treeCount">0</span></p>
+          <p>1/SEC</p>
+          <p id="treeCostText">50</p>
+        </div>
       </div>
       <div class="collectible" id="yardBox">
         <div class="yard-images">
@@ -111,13 +119,19 @@
           <img src="fruit-tree.png" width="40">
           <img src="fruit-tree.png" width="40">
         </div>
-        <p>Fruit Yards: <span id="yardCount">0</span></p>
-        <p id="yardText">FRUIT YARD\n5/click\n150</p>
+        <div class="text-container">
+          <p>FRUIT YARD: <span id="yardCount">0</span></p>
+          <p>5/CLICK</p>
+          <p id="yardCostText">150</p>
+        </div>
       </div>
       <div class="collectible" id="gardenBox">
         <img src="garden.png" width="96">
-        <p>Gardens: <span id="gardenCount">0</span></p>
-        <p id="gardenText">GARDEN\n20/click\n500</p>
+        <div class="text-container">
+          <p>GARDEN: <span id="gardenCount">0</span></p>
+          <p>20/CLICK</p>
+          <p id="gardenCostText">500</p>
+        </div>
       </div>
     </div>
   </div>
@@ -129,7 +143,6 @@
     let yardCost = 150;
     let gardens = 0;
     let gardenCost = 500;
-    let pointsPerClick = 1; // Base points per click
 
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
@@ -139,12 +152,12 @@
     const treeCount = document.getElementById("treeCount");
     const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
-    const treeText = document.getElementById("treeText");
-    const yardText = document.getElementById("yardText");
-    const gardenText = document.getElementById("gardenText");
+    const treeCostText = document.getElementById("treeCostText");
+    const yardCostText = document.getElementById("yardCostText");
+    const gardenCostText = document.getElementById("gardenCostText");
 
     appleButton.addEventListener("click", function() {
-      let totalPoints = pointsPerClick + (yards * 5) + (gardens * 20);
+      let totalPoints = (yards * 5) + (gardens * 20); // No base point
       score += totalPoints;
       scoreDisplay.textContent = score;
     });
@@ -156,7 +169,7 @@
         treeCost = Math.floor(treeCost * 1.5);
         scoreDisplay.textContent = score;
         treeCount.textContent = trees;
-        treeText.textContent = `TREE\n1/sec\n${treeCost}`;
+        treeCostText.textContent = treeCost;
       }
     });
 
@@ -167,7 +180,7 @@
         yardCost = Math.floor(yardCost * 1.5);
         scoreDisplay.textContent = score;
         yardCount.textContent = yards;
-        yardText.textContent = `FRUIT YARD\n5/click\n${yardCost}`;
+        yardCostText.textContent = yardCost;
       }
     });
 
@@ -178,12 +191,12 @@
         gardenCost = Math.floor(gardenCost * 1.5);
         scoreDisplay.textContent = score;
         gardenCount.textContent = gardens;
-        gardenText.textContent = `GARDEN\n20/click\n${gardenCost}`;
+        gardenCostText.textContent = gardenCost;
       }
     });
 
     setInterval(function() {
-      score += trees * 1; // Only trees add passive points
+      score += trees * 1; // Trees add passive points
       scoreDisplay.textContent = score;
     }, 1000);
   </script>
