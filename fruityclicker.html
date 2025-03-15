@@ -166,10 +166,10 @@
       if (score >= treeCost) {
         score -= treeCost;
         trees += 1;
-        treeCost = Math.floor(treeCost * 1.5);
+        // treeCost = Math.floor(treeCost * 1.5); // Removed cost increase
         scoreDisplay.textContent = score;
         treeCount.textContent = trees;
-        treeCostText.textContent = treeCost;
+        treeCostText.textContent = treeCost; // Stays 50
       }
     });
 
@@ -177,10 +177,10 @@
       if (score >= yardCost) {
         score -= yardCost;
         yards += 1;
-        yardCost = Math.floor(yardCost * 1.5);
+        // yardCost = Math.floor(yardCost * 1.5); // Removed cost increase
         scoreDisplay.textContent = score;
         yardCount.textContent = yards;
-        yardCostText.textContent = yardCost;
+        yardCostText.textContent = yardCost; // Stays 150
       }
     });
 
@@ -188,10 +188,10 @@
       if (score >= gardenCost) {
         score -= gardenCost;
         gardens += 1;
-        gardenCost = Math.floor(gardenCost * 1.5);
+        // gardenCost = Math.floor(gardenCost * 1.5); // Removed cost increase
         scoreDisplay.textContent = score;
         gardenCount.textContent = gardens;
-        gardenCostText.textContent = gardenCost;
+        gardenCostText.textContent = gardenCost; // Stays 500
       }
     });
 
