@@ -49,33 +49,33 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      align-items: center; /* Center horizontally */
-    }
-    .collectible button {
-      padding: 5px 10px;
-      font-size: 14px;
-      border: none;
-      border-radius: 5px;
+      align-items: center;
       cursor: pointer;
-      width: 130px; /* Fixed width to prevent overlap */
+      transition: background-color 0.2s;
     }
-    #treeButton {
-      background-color: #ffcc33;
+    .collectible:hover {
+      background-color: #f0f0f0; /* Light gray hover effect */
     }
-    #treeButton:hover {
-      background-color: #ff9900;
+    .collectible:active {
+      background-color: #e0e0e0; /* Darker when clicked */
     }
-    #yardButton {
-      background-color: #33ccff;
+    #treeBox {
+      background-color: #fff3cc; /* Light yellow base */
     }
-    #yardButton:hover {
-      background-color: #0099cc;
+    #treeBox:hover {
+      background-color: #ffe066;
     }
-    #gardenButton {
-      background-color: #ff66cc;
+    #yardBox {
+      background-color: #cceeff; /* Light blue base */
     }
-    #gardenButton:hover {
-      background-color: #ff3399;
+    #yardBox:hover {
+      background-color: #66ccff;
+    }
+    #gardenBox {
+      background-color: #ffccf2; /* Light pink base */
+    }
+    #gardenBox:hover {
+      background-color: #ff99cc;
     }
     .yard-images {
       display: flex;
@@ -84,6 +84,11 @@
     .yard-images img {
       width: 40px;
       margin: 0 2px;
+    }
+    .collectible p {
+      margin: 5px 0;
+      font-size: 14px;
+      white-space: pre; /* Preserve line breaks for \n */
     }
   </style>
 </head>
@@ -98,7 +103,7 @@
       <div class="collectible" id="treeBox">
         <img src="fruit-tree.png" width="56">
         <p>Trees: <span id="treeCount">0</span></p>
-        <button id="treeButton">Buy Tree (+1/sec) - Cost: 50</button>
+        <p id="treeText">TREE\n1/sec\n50</p>
       </div>
       <div class="collectible" id="yardBox">
         <div class="yard-images">
@@ -107,12 +112,12 @@
           <img src="fruit-tree.png" width="40">
         </div>
         <p>Fruit Yards: <span id="yardCount">0</span></p>
-        <button id="yardButton">Buy Fruit Yard (+5/click) - Cost: 150</button>
+        <p id="yardText">FRUIT YARD\n5/click\n150</p>
       </div>
       <div class="collectible" id="gardenBox">
         <img src="garden.png" width="96">
         <p>Gardens: <span id="gardenCount">0</span></p>
-        <button id="gardenButton">Buy Garden (+20/click) - Cost: 500</button>
+        <p id="gardenText">GARDEN\n20/click\n500</p>
       </div>
     </div>
   </div>
@@ -128,12 +133,15 @@
 
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
-    const treeButton = document.getElementById("treeButton");
-    const yardButton = document.getElementById("yardButton");
-    const gardenButton = document.getElementById("gardenButton");
+    const treeBox = document.getElementById("treeBox");
+    const yardBox = document.getElementById("yardBox");
+    const gardenBox = document.getElementById("gardenBox");
     const treeCount = document.getElementById("treeCount");
     const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
+    const treeText = document.getElementById("treeText");
+    const yardText = document.getElementById("yardText");
+    const gardenText = document.getElementById("gardenText");
 
     appleButton.addEventListener("click", function() {
       let totalPoints = pointsPerClick + (yards * 5) + (gardens * 20);
@@ -141,36 +149,36 @@
       scoreDisplay.textContent = score;
     });
 
-    treeButton.addEventListener("click", function() {
+    treeBox.addEventListener("click", function() {
       if (score >= treeCost) {
         score -= treeCost;
         trees += 1;
         treeCost = Math.floor(treeCost * 1.5);
         scoreDisplay.textContent = score;
         treeCount.textContent = trees;
-        treeButton.textContent = `Buy Tree (+${trees}/sec) - Cost: ${treeCost}`;
+        treeText.textContent = `TREE\n1/sec\n${treeCost}`;
       }
     });
 
-    yardButton.addEventListener("click", function() {
+    yardBox.addEventListener("click", function() {
       if (score >= yardCost) {
         score -= yardCost;
         yards += 1;
         yardCost = Math.floor(yardCost * 1.5);
         scoreDisplay.textContent = score;
         yardCount.textContent = yards;
-        yardButton.textContent = `Buy Fruit Yard (+${yards * 5}/click) - Cost: ${yardCost}`;
+        yardText.textContent = `FRUIT YARD\n5/click\n${yardCost}`;
       }
     });
 
-    gardenButton.addEventListener("click", function() {
+    gardenBox.addEventListener("click", function() {
       if (score >= gardenCost) {
         score -= gardenCost;
         gardens += 1;
         gardenCost = Math.floor(gardenCost * 1.5);
         scoreDisplay.textContent = score;
         gardenCount.textContent = gardens;
-        gardenButton.textContent = `Buy Garden (+${gardens * 20}/click) - Cost: ${gardenCost}`;
+        gardenText.textContent = `GARDEN\n20/click\n${gardenCost}`;
       }
     });
 
