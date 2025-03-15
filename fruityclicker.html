@@ -49,7 +49,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      align-items: center; /* Center items horizontally */
+      align-items: center; /* Center horizontally */
     }
     .collectible button {
       padding: 5px 10px;
@@ -57,6 +57,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      width: 130px; /* Fixed width to prevent overlap */
     }
     #treeButton {
       background-color: #ffcc33;
@@ -78,7 +79,7 @@
     }
     .yard-images {
       display: flex;
-      justify-content: center; /* Center the three trees */
+      justify-content: center;
     }
     .yard-images img {
       width: 40px;
@@ -94,12 +95,12 @@
       <button id="appleButton"><img src="apple.png" width="150"></button>
     </div>
     <div id="sidebar">
-      <div class="collectible">
+      <div class="collectible" id="treeBox">
         <img src="fruit-tree.png" width="56">
         <p>Trees: <span id="treeCount">0</span></p>
         <button id="treeButton">Buy Tree (+1/sec) - Cost: 50</button>
       </div>
-      <div class="collectible">
+      <div class="collectible" id="yardBox">
         <div class="yard-images">
           <img src="fruit-tree.png" width="40">
           <img src="fruit-tree.png" width="40">
@@ -108,7 +109,7 @@
         <p>Fruit Yards: <span id="yardCount">0</span></p>
         <button id="yardButton">Buy Fruit Yard (+5/click) - Cost: 150</button>
       </div>
-      <div class="collectible">
+      <div class="collectible" id="gardenBox">
         <img src="garden.png" width="96">
         <p>Gardens: <span id="gardenCount">0</span></p>
         <button id="gardenButton">Buy Garden (+20/click) - Cost: 500</button>
@@ -123,6 +124,8 @@
     let yardCost = 150;
     let gardens = 0;
     let gardenCost = 500;
+    let pointsPerClick = 1; // Base points per click
+
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
     const treeButton = document.getElementById("treeButton");
@@ -133,7 +136,8 @@
     const gardenCount = document.getElementById("gardenCount");
 
     appleButton.addEventListener("click", function() {
-      score += 1 + (yards * 5) + (gardens * 20); // Base 1 + 5 per yard + 20 per garden
+      let totalPoints = pointsPerClick + (yards * 5) + (gardens * 20);
+      score += totalPoints;
       scoreDisplay.textContent = score;
     });
 
