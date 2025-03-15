@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Fruity Clicker</title>
@@ -103,7 +103,6 @@
       <h1>Fruity Clicker</h1>
       <p>Fruit Points: <span id="score">0</span></p>
       <button id="appleButton"><img src="apple.png" width="150"></button>
-      <p id="clickMessage" style="font-size: 12px; color: #666;">Buy a Fruit Yard or Garden to earn points per click!</p>
     </div>
     <div id="sidebar">
       <div class="collectible" id="treeBox">
@@ -156,18 +155,11 @@
     const treeCostText = document.getElementById("treeCostText");
     const yardCostText = document.getElementById("yardCostText");
     const gardenCostText = document.getElementById("gardenCostText");
-    const clickMessage = document.getElementById("clickMessage");
 
     appleButton.addEventListener("click", function() {
-      let totalPoints = (yards * 5) + (gardens * 20);
+      let totalPoints = 1 + (yards * 4) + (gardens * 19); // Base 1 + 4 per yard + 19 per garden
       score += totalPoints;
       scoreDisplay.textContent = score;
-      // Update message based on points per click
-      if (totalPoints === 0) {
-        clickMessage.textContent = "Buy a Fruit Yard or Garden to earn points per click!";
-      } else {
-        clickMessage.textContent = `Earning ${totalPoints} points per click!`;
-      }
     });
 
     treeBox.addEventListener("click", function() {
