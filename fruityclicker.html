@@ -49,9 +49,9 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      align-items: center; /* Center items horizontally */
     }
     .collectible button {
-      margin-top: 5px;
       padding: 5px 10px;
       font-size: 14px;
       border: none;
@@ -75,6 +75,10 @@
     }
     #gardenButton:hover {
       background-color: #ff3399;
+    }
+    .yard-images {
+      display: flex;
+      justify-content: center; /* Center the three trees */
     }
     .yard-images img {
       width: 40px;
@@ -129,7 +133,7 @@
     const gardenCount = document.getElementById("gardenCount");
 
     appleButton.addEventListener("click", function() {
-      score += 1 + (yards * 5) + (gardens * 20); // Base 1 + yards + gardens
+      score += 1 + (yards * 5) + (gardens * 20); // Base 1 + 5 per yard + 20 per garden
       scoreDisplay.textContent = score;
     });
 
