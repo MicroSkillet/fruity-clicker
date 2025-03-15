@@ -44,10 +44,11 @@
       border-radius: 10px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
       text-align: center;
-    }
-    .collectible img {
-      width: 80px;
-      height: auto;
+      height: 150px; /* Fixed height for uniformity */
+      width: 150px; /* Fixed width for uniformity */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .collectible button {
       margin-top: 5px;
@@ -63,11 +64,21 @@
     #treeButton:hover {
       background-color: #ff9900;
     }
+    #yardButton {
+      background-color: #33ccff;
+    }
+    #yardButton:hover {
+      background-color: #0099cc;
+    }
     #gardenButton {
       background-color: #ff66cc;
     }
     #gardenButton:hover {
       background-color: #ff3399;
+    }
+    .yard-images img {
+      width: 40px; /* Smaller trees for yard */
+      margin: 0 2px;
     }
   </style>
 </head>
@@ -80,12 +91,21 @@
     </div>
     <div id="sidebar">
       <div class="collectible">
-        <img src="fruit-tree.png" width="80">
+        <img src="fruit-tree.png" width="56">
         <p>Trees: <span id="treeCount">0</span></p>
-        <button id="treeButton">Buy Fruit Tree (+1/sec) - Cost: 50</button>
+        <button id="treeButton">Buy Tree (+1/sec) - Cost: 50</button>
       </div>
       <div class="collectible">
-        <img src="garden.png" width="80">
+        <div class="yard-images">
+          <img src="fruit-tree.png" width="40">
+          <img src="fruit-tree.png" width="40">
+          <img src="fruit-tree.png" width="40">
+        </div>
+        <p>Yards: <span id="yardCount">0</span></p>
+        <button id="yardButton">Buy Yard (+3/sec) - Cost: 150</button>
+      </div>
+      <div class="collectible">
+        <img src="garden.png" width="96">
         <p>Gardens: <span id="gardenCount">0</span></p>
         <button id="gardenButton">Buy Garden (+10/sec) - Cost: 500</button>
       </div>
@@ -95,13 +115,17 @@
     let score = 0;
     let trees = 0;
     let treeCost = 50;
+    let yards = 0;
+    let yardCost = 150;
     let gardens = 0;
     let gardenCost = 500;
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
     const treeButton = document.getElementById("treeButton");
+    const yardButton = document.getElementById("yardButton");
     const gardenButton = document.getElementById("gardenButton");
     const treeCount = document.getElementById("treeCount");
+    const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
 
     appleButton.addEventListener("click", function() {
@@ -116,7 +140,18 @@
         treeCost = Math.floor(treeCost * 1.5);
         scoreDisplay.textContent = score;
         treeCount.textContent = trees;
-        treeButton.textContent = `Buy Fruit Tree (+${trees}/sec) - Cost: ${treeCost}`;
+        treeButton.textContent = `Buy Tree (+${trees}/sec) - Cost: ${treeCost}`;
+      }
+    });
+
+    yardButton.addEventListener("click", function() {
+      if (score >= yardCost) {
+        score -= yardCost;
+        yards += 1;
+        yardCost = Math.floor(yardCost * 1.5);
+        scoreDisplay.textContent = score;
+        yardCount.textContent = yards;
+        yardButton.textContent = `Buy Yard (+${yards * 3}/sec) - Cost: ${yardCost}`;
       }
     });
 
@@ -132,7 +167,7 @@
     });
 
     setInterval(function() {
-      score += (trees * 1) + (gardens * 10);
+      score += (trees * 1) + (yards * 3) + (gardens * 10);
       scoreDisplay.textContent = score;
     }, 1000); // Passive points every second
   </script>
