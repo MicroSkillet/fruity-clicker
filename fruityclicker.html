@@ -5,130 +5,136 @@
   <style>
     body {
       background-color: #f0f8e6;
-    }
-    #game {
-      text-align: center;
+      margin: 0;
       font-family: Arial, sans-serif;
+    }
+    #container {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    #main {
+      text-align: center;
       background-color: #fff;
       padding: 20px;
       border-radius: 15px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 50%;
     }
-    #fruitButton {
+    #appleButton {
       border: none;
       cursor: pointer;
       background: none;
       transition: transform 0.1s;
     }
-    #fruitButton:hover {
+    #appleButton:hover {
       opacity: 0.8;
     }
-    #fruitButton:active {
+    #appleButton:active {
       transform: scale(0.9);
     }
-    #upgradeButton {
-      margin-top: 10px;
+    #sidebar {
+      width: 25%;
+      margin-left: 20px;
+    }
+    .collectible {
+      background-color: #fff;
       padding: 10px;
-      font-size: 18px;
-      background-color: #66cc66;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .collectible img {
+      width: 80px;
+      height: auto;
+    }
+    .collectible button {
+      margin-top: 5px;
+      padding: 5px 10px;
+      font-size: 14px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
-    #upgradeButton:hover {
-      background-color: #339933;
-    }
-    #autoButton {
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 18px;
+    #treeButton {
       background-color: #ffcc33;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
     }
-    #autoButton:hover {
+    #treeButton:hover {
       background-color: #ff9900;
     }
-    #multiplierButton {
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 18px;
+    #gardenButton {
       background-color: #ff66cc;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
     }
-    #multiplierButton:hover {
+    #gardenButton:hover {
       background-color: #ff3399;
     }
   </style>
 </head>
 <body>
-  <div id="game">
-    <h1>Fruity Clicker</h1>
-    <p>Fruit Points: <span id="score">0</span></p>
-    <button id="fruitButton"><img src="apple.png" width="150"></button>
-    <br>
-    <button id="upgradeButton">Upgrade (+1 per click) - Cost: 10</button>
-    <br>
-    <button id="autoButton">Auto-Clicker (+0/sec) - Cost: 50</button>
-    <br>
-    <button id="multiplierButton">Multiplier (x1) - Cost: 100</button>
+  <div id="container">
+    <div id="main">
+      <h1>Fruity Clicker</h1>
+      <p>Fruit Points: <span id="score">0</span></p>
+      <button id="appleButton"><img src="apple.png" width="150"></button>
+    </div>
+    <div id="sidebar">
+      <div class="collectible">
+        <img src="fruit-tree.png" width="80">
+        <p>Trees: <span id="treeCount">0</span></p>
+        <button id="treeButton">Buy Fruit Tree (+1/sec) - Cost: 50</button>
+      </div>
+      <div class="collectible">
+        <img src="garden.png" width="80">
+        <p>Gardens: <span id="gardenCount">0</span></p>
+        <button id="gardenButton">Buy Garden (+10/sec) - Cost: 500</button>
+      </div>
+    </div>
   </div>
   <script>
     let score = 0;
-    let pointsPerClick = 1;
-    let upgradeCost = 10;
-    let autoClickers = 0;
-    let autoCost = 50;
-    let multiplier = 1;
-    let multiplierCost = 100;
+    let trees = 0;
+    let treeCost = 50;
+    let gardens = 0;
+    let gardenCost = 500;
     const scoreDisplay = document.getElementById("score");
-    const fruitButton = document.getElementById("fruitButton");
-    const upgradeButton = document.getElementById("upgradeButton");
-    const autoButton = document.getElementById("autoButton");
-    const multiplierButton = document.getElementById("multiplierButton");
+    const appleButton = document.getElementById("appleButton");
+    const treeButton = document.getElementById("treeButton");
+    const gardenButton = document.getElementById("gardenButton");
+    const treeCount = document.getElementById("treeCount");
+    const gardenCount = document.getElementById("gardenCount");
 
-    fruitButton.addEventListener("click", function() {
-      score += pointsPerClick * multiplier;
+    appleButton.addEventListener("click", function() {
+      score += 1;
       scoreDisplay.textContent = score;
     });
 
-    upgradeButton.addEventListener("click", function() {
-      if (score >= upgradeCost) {
-        score -= upgradeCost;
-        pointsPerClick += 1;
-        upgradeCost = Math.floor(upgradeCost * 1.5);
+    treeButton.addEventListener("click", function() {
+      if (score >= treeCost) {
+        score -= treeCost;
+        trees += 1;
+        treeCost = Math.floor(treeCost * 1.5);
         scoreDisplay.textContent = score;
-        upgradeButton.textContent = `Upgrade (+${pointsPerClick} per click) - Cost: ${upgradeCost}`;
+        treeCount.textContent = trees;
+        treeButton.textContent = `Buy Fruit Tree (+${trees}/sec) - Cost: ${treeCost}`;
       }
     });
 
-    autoButton.addEventListener("click", function() {
-      if (score >= autoCost) {
-        score -= autoCost;
-        autoClickers += 1;
-        autoCost = Math.floor(autoCost * 1.5);
+    gardenButton.addEventListener("click", function() {
+      if (score >= gardenCost) {
+        score -= gardenCost;
+        gardens += 1;
+        gardenCost = Math.floor(gardenCost * 1.5);
         scoreDisplay.textContent = score;
-        autoButton.textContent = `Auto-Clicker (+${autoClickers}/sec) - Cost: ${autoCost}`;
-      }
-    });
-
-    multiplierButton.addEventListener("click", function() {
-      if (score >= multiplierCost) {
-        score -= multiplierCost;
-        multiplier += 1;
-        multiplierCost = Math.floor(multiplierCost * 2);
-        scoreDisplay.textContent = score;
-        multiplierButton.textContent = `Multiplier (x${multiplier}) - Cost: ${multiplierCost}`;
+        gardenCount.textContent = gardens;
+        gardenButton.textContent = `Buy Garden (+${gardens * 10}/sec) - Cost: ${gardenCost}`;
       }
     });
 
     setInterval(function() {
-      score += autoClickers * multiplier;
+      score += (trees * 1) + (gardens * 10);
       scoreDisplay.textContent = score;
-    }, 1000);
+    }, 1000); // Passive points every second
   </script>
 </body>
 </html>
