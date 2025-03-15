@@ -44,8 +44,8 @@
       border-radius: 10px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
       text-align: center;
-      height: 150px; /* Fixed height for uniformity */
-      width: 150px; /* Fixed width for uniformity */
+      height: 150px;
+      width: 150px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -77,7 +77,7 @@
       background-color: #ff3399;
     }
     .yard-images img {
-      width: 40px; /* Smaller trees for yard */
+      width: 40px;
       margin: 0 2px;
     }
   </style>
@@ -101,13 +101,13 @@
           <img src="fruit-tree.png" width="40">
           <img src="fruit-tree.png" width="40">
         </div>
-        <p>Yards: <span id="yardCount">0</span></p>
-        <button id="yardButton">Buy Yard (+3/sec) - Cost: 150</button>
+        <p>Fruit Yards: <span id="yardCount">0</span></p>
+        <button id="yardButton">Buy Fruit Yard (+5/click) - Cost: 150</button>
       </div>
       <div class="collectible">
         <img src="garden.png" width="96">
         <p>Gardens: <span id="gardenCount">0</span></p>
-        <button id="gardenButton">Buy Garden (+10/sec) - Cost: 500</button>
+        <button id="gardenButton">Buy Garden (+20/click) - Cost: 500</button>
       </div>
     </div>
   </div>
@@ -129,7 +129,7 @@
     const gardenCount = document.getElementById("gardenCount");
 
     appleButton.addEventListener("click", function() {
-      score += 1;
+      score += 1 + (yards * 5) + (gardens * 20); // Base 1 + yards + gardens
       scoreDisplay.textContent = score;
     });
 
@@ -151,7 +151,7 @@
         yardCost = Math.floor(yardCost * 1.5);
         scoreDisplay.textContent = score;
         yardCount.textContent = yards;
-        yardButton.textContent = `Buy Yard (+${yards * 3}/sec) - Cost: ${yardCost}`;
+        yardButton.textContent = `Buy Fruit Yard (+${yards * 5}/click) - Cost: ${yardCost}`;
       }
     });
 
@@ -162,14 +162,14 @@
         gardenCost = Math.floor(gardenCost * 1.5);
         scoreDisplay.textContent = score;
         gardenCount.textContent = gardens;
-        gardenButton.textContent = `Buy Garden (+${gardens * 10}/sec) - Cost: ${gardenCost}`;
+        gardenButton.textContent = `Buy Garden (+${gardens * 20}/click) - Cost: ${gardenCost}`;
       }
     });
 
     setInterval(function() {
-      score += (trees * 1) + (yards * 3) + (gardens * 10);
+      score += trees * 1; // Only trees add passive points
       scoreDisplay.textContent = score;
-    }, 1000); // Passive points every second
+    }, 1000);
   </script>
 </body>
 </html>
