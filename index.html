@@ -89,6 +89,12 @@
     #landBox:hover {
       background-color: #d9ccff;
     }
+    #planetBox {
+      background-color: #e6f2ff; /* Light blue for Fruit Planet */
+    }
+    #planetBox:hover {
+      background-color: #cce5ff;
+    }
     .yard-images {
       display: flex;
       justify-content: center;
@@ -113,7 +119,7 @@
   <div id="container">
     <div id="main">
       <h1>Fruity Clicker</h1>
-      <p>Fruit Points: $<span id="score">0</span></p>
+      <p>Fruit Loot: $<span id="score">0</span></p>
       <button id="appleButton"><img src="apple.png" width="150"></button>
     </div>
     <div id="sidebar">
@@ -161,6 +167,14 @@
           <p id="landCostText">$10,000</p>
         </div>
       </div>
+      <div class="collectible" id="planetBox">
+        <img src="fruit-planet.png" width="120">
+        <div class="text-container">
+          <p>FRUIT PLANET: <span id="planetCount">0</span></p>
+          <p>300/SEC</p>
+          <p id="planetCostText">$50,000</p>
+        </div>
+      </div>
     </div>
   </div>
   <script>
@@ -175,6 +189,8 @@
     let armyCost = 750;
     let lands = 0;
     let landCost = 10000;
+    let planets = 0;
+    let planetCost = 50000;
 
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
@@ -183,16 +199,19 @@
     const gardenBox = document.getElementById("gardenBox");
     const armyBox = document.getElementById("armyBox");
     const landBox = document.getElementById("landBox");
+    const planetBox = document.getElementById("planetBox");
     const treeCount = document.getElementById("treeCount");
     const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
     const armyCount = document.getElementById("armyCount");
     const landCount = document.getElementById("landCount");
+    const planetCount = document.getElementById("planetCount");
     const treeCostText = document.getElementById("treeCostText");
     const yardCostText = document.getElementById("yardCostText");
     const gardenCostText = document.getElementById("gardenCostText");
     const armyCostText = document.getElementById("armyCostText");
     const landCostText = document.getElementById("landCostText");
+    const planetCostText = document.getElementById("planetCostText");
 
     // Function to format numbers with commas
     function formatNumber(num) {
@@ -255,8 +274,18 @@
       }
     });
 
+    planetBox.addEventListener("click", function() {
+      if (score >= planetCost) {
+        score -= planetCost;
+        planets += 1;
+        scoreDisplay.textContent = formatNumber(score);
+        planetCount.textContent = planets;
+        planetCostText.textContent = "$" + formatNumber(planetCost);
+      }
+    });
+
     setInterval(function() {
-      score += (trees * 1) + (armies * 45);
+      score += (trees * 1) + (armies * 45) + (planets * 300);
       scoreDisplay.textContent = formatNumber(score);
     }, 1000);
   </script>
