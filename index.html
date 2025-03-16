@@ -84,7 +84,7 @@
       background-color: #99ff99;
     }
     #landBox {
-      background-color: #f0e6ff; /* Light purple for Fruit Land */
+      background-color: #f0e6ff;
     }
     #landBox:hover {
       background-color: #d9ccff;
@@ -113,7 +113,7 @@
   <div id="container">
     <div id="main">
       <h1>Fruity Clicker</h1>
-      <p>Fruit Points: <span id="score">0</span></p>
+      <p>Fruit Points: $<span id="score">0</span></p>
       <button id="appleButton"><img src="apple.png" width="150"></button>
     </div>
     <div id="sidebar">
@@ -122,7 +122,7 @@
         <div class="text-container">
           <p>TREE: <span id="treeCount">0</span></p>
           <p>1/SEC</p>
-          <p id="treeCostText">50</p>
+          <p id="treeCostText">$50</p>
         </div>
       </div>
       <div class="collectible" id="yardBox">
@@ -134,7 +134,7 @@
         <div class="text-container">
           <p>FRUIT YARD: <span id="yardCount">0</span></p>
           <p>5/CLICK</p>
-          <p id="yardCostText">150</p>
+          <p id="yardCostText">$150</p>
         </div>
       </div>
       <div class="collectible" id="gardenBox">
@@ -142,7 +142,7 @@
         <div class="text-container">
           <p>GARDEN: <span id="gardenCount">0</span></p>
           <p>20/CLICK</p>
-          <p id="gardenCostText">500</p>
+          <p id="gardenCostText">$500</p>
         </div>
       </div>
       <div class="collectible" id="armyBox">
@@ -150,7 +150,7 @@
         <div class="text-container">
           <p>FRUIT ARMY: <span id="armyCount">0</span></p>
           <p>45/SEC</p>
-          <p id="armyCostText">750</p>
+          <p id="armyCostText">$750</p>
         </div>
       </div>
       <div class="collectible" id="landBox">
@@ -158,7 +158,7 @@
         <div class="text-container">
           <p>FRUIT LAND: <span id="landCount">0</span></p>
           <p>150/CLICK</p>
-          <p id="landCostText">10000</p>
+          <p id="landCostText">$10,000</p>
         </div>
       </div>
     </div>
@@ -194,19 +194,24 @@
     const armyCostText = document.getElementById("armyCostText");
     const landCostText = document.getElementById("landCostText");
 
+    // Function to format numbers with commas
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     appleButton.addEventListener("click", function() {
       let totalPoints = 1 + (yards * 4) + (gardens * 19) + (lands * 149);
       score += totalPoints;
-      scoreDisplay.textContent = score;
+      scoreDisplay.textContent = formatNumber(score);
     });
 
     treeBox.addEventListener("click", function() {
       if (score >= treeCost) {
         score -= treeCost;
         trees += 1;
-        scoreDisplay.textContent = score;
+        scoreDisplay.textContent = formatNumber(score);
         treeCount.textContent = trees;
-        treeCostText.textContent = treeCost;
+        treeCostText.textContent = "$" + formatNumber(treeCost);
       }
     });
 
@@ -214,9 +219,9 @@
       if (score >= yardCost) {
         score -= yardCost;
         yards += 1;
-        scoreDisplay.textContent = score;
+        scoreDisplay.textContent = formatNumber(score);
         yardCount.textContent = yards;
-        yardCostText.textContent = yardCost;
+        yardCostText.textContent = "$" + formatNumber(yardCost);
       }
     });
 
@@ -224,9 +229,9 @@
       if (score >= gardenCost) {
         score -= gardenCost;
         gardens += 1;
-        scoreDisplay.textContent = score;
+        scoreDisplay.textContent = formatNumber(score);
         gardenCount.textContent = gardens;
-        gardenCostText.textContent = gardenCost;
+        gardenCostText.textContent = "$" + formatNumber(gardenCost);
       }
     });
 
@@ -234,9 +239,9 @@
       if (score >= armyCost) {
         score -= armyCost;
         armies += 1;
-        scoreDisplay.textContent = score;
+        scoreDisplay.textContent = formatNumber(score);
         armyCount.textContent = armies;
-        armyCostText.textContent = armyCost;
+        armyCostText.textContent = "$" + formatNumber(armyCost);
       }
     });
 
@@ -244,15 +249,15 @@
       if (score >= landCost) {
         score -= landCost;
         lands += 1;
-        scoreDisplay.textContent = score;
+        scoreDisplay.textContent = formatNumber(score);
         landCount.textContent = lands;
-        landCostText.textContent = landCost;
+        landCostText.textContent = "$" + formatNumber(landCost);
       }
     });
 
     setInterval(function() {
       score += (trees * 1) + (armies * 45);
-      scoreDisplay.textContent = score;
+      scoreDisplay.textContent = formatNumber(score);
     }, 1000);
   </script>
 </body>
