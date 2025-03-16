@@ -78,10 +78,16 @@
       background-color: #ff99cc;
     }
     #armyBox {
-      background-color: #ccffcc; /* Light green for Fruit Army */
+      background-color: #ccffcc;
     }
     #armyBox:hover {
       background-color: #99ff99;
+    }
+    #landBox {
+      background-color: #f0e6ff; /* Light purple for Fruit Land */
+    }
+    #landBox:hover {
+      background-color: #d9ccff;
     }
     .yard-images {
       display: flex;
@@ -147,6 +153,14 @@
           <p id="armyCostText">750</p>
         </div>
       </div>
+      <div class="collectible" id="landBox">
+        <img src="fruit-land.png" width="100">
+        <div class="text-container">
+          <p>FRUIT LAND: <span id="landCount">0</span></p>
+          <p>150/CLICK</p>
+          <p id="landCostText">10000</p>
+        </div>
+      </div>
     </div>
   </div>
   <script>
@@ -159,6 +173,8 @@
     let gardenCost = 500;
     let armies = 0;
     let armyCost = 750;
+    let lands = 0;
+    let landCost = 10000;
 
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
@@ -166,17 +182,20 @@
     const yardBox = document.getElementById("yardBox");
     const gardenBox = document.getElementById("gardenBox");
     const armyBox = document.getElementById("armyBox");
+    const landBox = document.getElementById("landBox");
     const treeCount = document.getElementById("treeCount");
     const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
     const armyCount = document.getElementById("armyCount");
+    const landCount = document.getElementById("landCount");
     const treeCostText = document.getElementById("treeCostText");
     const yardCostText = document.getElementById("yardCostText");
     const gardenCostText = document.getElementById("gardenCostText");
     const armyCostText = document.getElementById("armyCostText");
+    const landCostText = document.getElementById("landCostText");
 
     appleButton.addEventListener("click", function() {
-      let totalPoints = 1 + (yards * 4) + (gardens * 19);
+      let totalPoints = 1 + (yards * 4) + (gardens * 19) + (lands * 149);
       score += totalPoints;
       scoreDisplay.textContent = score;
     });
@@ -221,8 +240,18 @@
       }
     });
 
+    landBox.addEventListener("click", function() {
+      if (score >= landCost) {
+        score -= landCost;
+        lands += 1;
+        scoreDisplay.textContent = score;
+        landCount.textContent = lands;
+        landCostText.textContent = landCost;
+      }
+    });
+
     setInterval(function() {
-      score += (trees * 1) + (armies * 45); // Passive points from trees and armies
+      score += (trees * 1) + (armies * 45);
       scoreDisplay.textContent = score;
     }, 1000);
   </script>
