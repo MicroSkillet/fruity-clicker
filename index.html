@@ -102,10 +102,16 @@
       background-color: #ffddcc;
     }
     #tntBox {
-      background-color: #ffe6e6; /* Light red for Fruit TNT */
+      background-color: #ffe6e6;
     }
     #tntBox:hover {
       background-color: #ffcccc;
+    }
+    #templeBox {
+      background-color: #f2f2e6; /* Light beige for Fruit Temple */
+    }
+    #templeBox:hover {
+      background-color: #e6e6cc;
     }
     .yard-images {
       display: flex;
@@ -203,6 +209,14 @@
           <p id="tntCostText">$100,000</p>
         </div>
       </div>
+      <div class="collectible" id="templeBox">
+        <img src="fruit-temple.png" width="130">
+        <div class="text-container">
+          <p>FRUIT TEMPLE: <span id="templeCount">0</span></p>
+          <p>1,000/CLICK</p>
+          <p id="templeCostText">$150,000</p>
+        </div>
+      </div>
     </div>
   </div>
   <script>
@@ -223,6 +237,8 @@
     let famousCost = 70000;
     let tnts = 0;
     let tntCost = 100000;
+    let temples = 0;
+    let templeCost = 150000;
 
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
@@ -234,6 +250,7 @@
     const planetBox = document.getElementById("planetBox");
     const famousBox = document.getElementById("famousBox");
     const tntBox = document.getElementById("tntBox");
+    const templeBox = document.getElementById("templeBox");
     const treeCount = document.getElementById("treeCount");
     const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
@@ -242,6 +259,7 @@
     const planetCount = document.getElementById("planetCount");
     const famousCount = document.getElementById("famousCount");
     const tntCount = document.getElementById("tntCount");
+    const templeCount = document.getElementById("templeCount");
     const treeCostText = document.getElementById("treeCostText");
     const yardCostText = document.getElementById("yardCostText");
     const gardenCostText = document.getElementById("gardenCostText");
@@ -250,6 +268,7 @@
     const planetCostText = document.getElementById("planetCostText");
     const famousCostText = document.getElementById("famousCostText");
     const tntCostText = document.getElementById("tntCostText");
+    const templeCostText = document.getElementById("templeCostText");
 
     // Function to format numbers with commas
     function formatNumber(num) {
@@ -257,7 +276,7 @@
     }
 
     appleButton.addEventListener("click", function() {
-      let totalPoints = 1 + (yards * 4) + (gardens * 19) + (lands * 149) + (famous * 399);
+      let totalPoints = 1 + (yards * 4) + (gardens * 19) + (lands * 149) + (famous * 399) + (temples * 999);
       score += totalPoints;
       scoreDisplay.textContent = formatNumber(score);
     });
@@ -339,6 +358,16 @@
         scoreDisplay.textContent = formatNumber(score);
         tntCount.textContent = tnts;
         tntCostText.textContent = "$" + formatNumber(tntCost);
+      }
+    });
+
+    templeBox.addEventListener("click", function() {
+      if (score >= templeCost) {
+        score -= templeCost;
+        temples += 1;
+        scoreDisplay.textContent = formatNumber(score);
+        templeCount.textContent = temples;
+        templeCostText.textContent = "$" + formatNumber(templeCost);
       }
     });
 
