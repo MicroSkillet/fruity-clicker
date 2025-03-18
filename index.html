@@ -114,10 +114,16 @@
       background-color: #e6e6cc;
     }
     #cosmicBox {
-      background-color: #e6f2e6; /* Light cosmic green for Cosmic Fruit */
+      background-color: #e6f2e6;
     }
     #cosmicBox:hover {
       background-color: #cce5cc;
+    }
+    #cycleBox {
+      background-color: #e6fff2; /* Light mint for Fruit Cycle */
+    }
+    #cycleBox:hover {
+      background-color: #ccffe6;
     }
     .yard-images {
       display: flex;
@@ -231,6 +237,14 @@
           <p id="cosmicCostText">$1,000,000</p>
         </div>
       </div>
+      <div class="collectible" id="cycleBox">
+        <img src="fruit-cycle.png" width="150">
+        <div class="text-container">
+          <p>FRUIT CYCLE: <span id="cycleCount">0</span></p>
+          <p>25,000/CLICK</p>
+          <p id="cycleCostText">$5,000,000</p>
+        </div>
+      </div>
     </div>
   </div>
   <script>
@@ -255,6 +269,8 @@
     let templeCost = 150000;
     let cosmics = 0;
     let cosmicCost = 1000000;
+    let cycles = 0;
+    let cycleCost = 5000000;
 
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
@@ -268,6 +284,7 @@
     const tntBox = document.getElementById("tntBox");
     const templeBox = document.getElementById("templeBox");
     const cosmicBox = document.getElementById("cosmicBox");
+    const cycleBox = document.getElementById("cycleBox");
     const treeCount = document.getElementById("treeCount");
     const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
@@ -278,6 +295,7 @@
     const tntCount = document.getElementById("tntCount");
     const templeCount = document.getElementById("templeCount");
     const cosmicCount = document.getElementById("cosmicCount");
+    const cycleCount = document.getElementById("cycleCount");
     const treeCostText = document.getElementById("treeCostText");
     const yardCostText = document.getElementById("yardCostText");
     const gardenCostText = document.getElementById("gardenCostText");
@@ -288,6 +306,7 @@
     const tntCostText = document.getElementById("tntCostText");
     const templeCostText = document.getElementById("templeCostText");
     const cosmicCostText = document.getElementById("cosmicCostText");
+    const cycleCostText = document.getElementById("cycleCostText");
 
     // Function to format numbers with commas
     function formatNumber(num) {
@@ -295,7 +314,7 @@
     }
 
     appleButton.addEventListener("click", function() {
-      let totalPoints = 1 + (yards * 4) + (gardens * 19) + (lands * 149) + (famous * 399) + (temples * 999);
+      let totalPoints = 1 + (yards * 4) + (gardens * 19) + (lands * 149) + (famous * 399) + (temples * 999) + (cycles * 24999);
       score += totalPoints;
       scoreDisplay.textContent = formatNumber(score);
     });
@@ -397,6 +416,16 @@
         scoreDisplay.textContent = formatNumber(score);
         cosmicCount.textContent = cosmics;
         cosmicCostText.textContent = "$" + formatNumber(cosmicCost);
+      }
+    });
+
+    cycleBox.addEventListener("click", function() {
+      if (score >= cycleCost) {
+        score -= cycleCost;
+        cycles += 1;
+        scoreDisplay.textContent = formatNumber(score);
+        cycleCount.textContent = cycles;
+        cycleCostText.textContent = "$" + formatNumber(cycleCost);
       }
     });
 
