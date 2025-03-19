@@ -120,10 +120,16 @@
       background-color: #cce5cc;
     }
     #cycleBox {
-      background-color: #e6fff2; /* Light mint for Fruit Cycle */
+      background-color: #e6fff2;
     }
     #cycleBox:hover {
       background-color: #ccffe6;
+    }
+    #skibidiBox {
+      background-color: #f2e6ff; /* Light purple for Skibidi Fruit */
+    }
+    #skibidiBox:hover {
+      background-color: #e6ccff;
     }
     .yard-images {
       display: flex;
@@ -245,6 +251,14 @@
           <p id="cycleCostText">$5,000,000</p>
         </div>
       </div>
+      <div class="collectible" id="skibidiBox">
+        <img src="skibidi-fruit.png" width="160">
+        <div class="text-container">
+          <p>SKIBIDI FRUIT: <span id="skibidiCount">0</span></p>
+          <p>1,000,000/SEC</p>
+          <p id="skibidiCostText">$25,000,000</p>
+        </div>
+      </div>
     </div>
   </div>
   <script>
@@ -271,6 +285,8 @@
     let cosmicCost = 1000000;
     let cycles = 0;
     let cycleCost = 5000000;
+    let skibidis = 0;
+    let skibidiCost = 25000000;
 
     const scoreDisplay = document.getElementById("score");
     const appleButton = document.getElementById("appleButton");
@@ -285,6 +301,7 @@
     const templeBox = document.getElementById("templeBox");
     const cosmicBox = document.getElementById("cosmicBox");
     const cycleBox = document.getElementById("cycleBox");
+    const skibidiBox = document.getElementById("skibidiBox");
     const treeCount = document.getElementById("treeCount");
     const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
@@ -296,6 +313,7 @@
     const templeCount = document.getElementById("templeCount");
     const cosmicCount = document.getElementById("cosmicCount");
     const cycleCount = document.getElementById("cycleCount");
+    const skibidiCount = document.getElementById("skibidiCount");
     const treeCostText = document.getElementById("treeCostText");
     const yardCostText = document.getElementById("yardCostText");
     const gardenCostText = document.getElementById("gardenCostText");
@@ -307,6 +325,7 @@
     const templeCostText = document.getElementById("templeCostText");
     const cosmicCostText = document.getElementById("cosmicCostText");
     const cycleCostText = document.getElementById("cycleCostText");
+    const skibidiCostText = document.getElementById("skibidiCostText");
 
     // Function to format numbers with commas
     function formatNumber(num) {
@@ -429,8 +448,18 @@
       }
     });
 
+    skibidiBox.addEventListener("click", function() {
+      if (score >= skibidiCost) {
+        score -= skibidiCost;
+        skibidis += 1;
+        scoreDisplay.textContent = formatNumber(score);
+        skibidiCount.textContent = skibidis;
+        skibidiCostText.textContent = "$" + formatNumber(skibidiCost);
+      }
+    });
+
     setInterval(function() {
-      score += (trees * 1) + (armies * 45) + (planets * 300) + (tnts * 600) + (cosmics * 5000);
+      score += (trees * 1) + (armies * 45) + (planets * 300) + (tnts * 600) + (cosmics * 5000) + (skibidis * 1000000);
       scoreDisplay.textContent = formatNumber(score);
     }, 1000);
   </script>
