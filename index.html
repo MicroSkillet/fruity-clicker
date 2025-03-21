@@ -7,6 +7,22 @@
       background-color: #f0f8e6;
       margin: 0;
       font-family: Arial, sans-serif;
+      position: relative; /* For absolute positioning of rewards */
+    }
+    #rewardsButton {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    #rewardsButton:hover {
+      opacity: 0.8;
+    }
+    #rewardsButton:active {
+      transform: scale(0.9);
     }
     #container {
       display: flex;
@@ -126,7 +142,7 @@
       background-color: #ccffe6;
     }
     #skibidiBox {
-      background-color: #f2e6ff; /* Light purple for Skibidi Fruit */
+      background-color: #f2e6ff;
     }
     #skibidiBox:hover {
       background-color: #e6ccff;
@@ -152,6 +168,7 @@
   </style>
 </head>
 <body>
+  <button id="rewardsButton" title="Rewards"><img src="rewards.png" width="50"></button>
   <div id="container">
     <div id="main">
       <h1>Fruity Clicker</h1>
@@ -302,6 +319,7 @@
     const cosmicBox = document.getElementById("cosmicBox");
     const cycleBox = document.getElementById("cycleBox");
     const skibidiBox = document.getElementById("skibidiBox");
+    const rewardsButton = document.getElementById("rewardsButton");
     const treeCount = document.getElementById("treeCount");
     const yardCount = document.getElementById("yardCount");
     const gardenCount = document.getElementById("gardenCount");
@@ -456,6 +474,11 @@
         skibidiCount.textContent = skibidis;
         skibidiCostText.textContent = "$" + formatNumber(skibidiCost);
       }
+    });
+
+    rewardsButton.addEventListener("click", function() {
+      // Placeholder for future rewards dropdown/window
+      alert("Rewards system coming soon!");
     });
 
     setInterval(function() {
